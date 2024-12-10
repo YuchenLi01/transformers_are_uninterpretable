@@ -1,0 +1,65 @@
+
+                                    corpus:
+                                        train_corpus_loc: data/k2_m4_25.train
+                                        dev_corpus_loc: data/k2_m4_25.dev
+                                        test_corpus_loc:  data/k2_m4_25.test
+                                    language:
+                                        name: dyck
+                                        bracket_types: 2
+                                        train_max_length: 28
+                                        train_max_stack_depth: 4
+                                        train_min_length: 1
+                                        train_sample_count: 100000
+                                        dev_max_length: 500
+                                        dev_max_stack_depth: 4
+                                        dev_min_length: 400
+                                        dev_sample_count: 10000
+                                        prefix: False
+                                    lm:
+                                        lm_type: GPT2LMHeadModelCustom
+                                        embedding_dim: 50
+                                        hidden_dim: 50
+                                        num_layers: 2
+                                        num_heads: 1
+                                        save_path: lm.params
+                                        embedding_type: p
+                                        token_embedding_type: one_hot  # trained or one_hot
+                                        residual: True  # TODO whether the self attention has residual connections
+                                        attn_output_fc: True  # TODO whether the self attention output has a fully connected layer
+                                        gpt_intermediate: True  # TODO whether the BertLayer has a BertIntermediate (FC) sub-layer
+                                        layer_norm: True  # whether the model has LayerNorm
+                                        first_residual: True
+                                        another_first_residual: False
+                                        one_layer_norm: True
+                                        freeze_uniform_attention: False
+                                        freeze_decoder_to_I: False
+                                        small_initialization: False               
+                                    reporting:
+                                        reporting_loc: ./trained_models/example/  # TODO
+                                        reporting_methods:
+                                        - constraints
+                                        plot_attention_dir: ./plot_attention/example/  # TODO
+                                        inspect_results_dir: ./inspect_results/example/  # TODO
+                                        num_sentences_to_plot: 5
+                                        random: False
+                                    training:
+                                        batch_size: 100
+                                        dropout: 0.0
+                                        optimizer: Adam  # Adam or SGD
+                                        scheduler: Cosine
+                                        learning_rate: 3e-3
+                                        weight_decay: 0.0
+                                        max_epochs: 40
+                                        seed: 25
+                                        objective: default # default or contrastive or multi
+                                        regularize_penalty: 0.3
+                                        mask_prob: 0  # if using GPT, should almost always be 0.0 
+                                        mask_correct_prob: 0.1  # the proportion of "masked" tokens that show the correct token
+                                        mask_random_prob: 0  # the proportion of "masked" tokens that show a random token
+                                        mask_closing_brackets_only: True
+                                        check_closing_brackets_only: True
+                                        check_all_tokens: False
+                                        log_balance: True
+                                    experiment:
+                                        repeat: 1  # number of times to re-train the model
+                                    
